@@ -5,25 +5,22 @@ using UnityEngine;
 
 public class Orb : MonoBehaviour
 {
-    private PlayerHP playerHP;
-
-    void Awake()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // Get the PlayerHP component from the player GameObject
-        playerHP = GetComponent<PlayerHP>();
-    }
-
-    private void OnTriggerEnter2D(Collider2D pCollider2D)
-    {
-        // Check if the collider is the player by verifying if it has the PlayerHP component
-        PlayerHP player = pCollider2D.GetComponent<PlayerHP>();
-        if (player != null)
+        if (other.CompareTag("Player"))
         {
-            // Heal the player
-            player.Heal(10f);
+            // Get the CheckpointManager and set the current checkpoint
+            CheckpointManager checkpointManager = FindObjectOfType<CheckpointManager>();
+            if (checkpointManager != null)
+            {
+                checkpointManager.SetCheckpoint(transform);
+                Debug.Log("Checkpoint updated!");
 
-            // Destroy the orb after healing the player
-            Destroy(gameObject);
+                // Make the checkpoint disappear by disabling or destroying it
+                gameObject.SetActive(false); // Disables the checkpoint
+                // or
+                // Destroy(gameObject); // Use this line instead if you want to permanently destroy it
+            }
         }
     }
 }
