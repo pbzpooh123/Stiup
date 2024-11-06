@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Check if the player is grounded
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
 
         // Reset jump state if grounded again
         if (isGrounded)
