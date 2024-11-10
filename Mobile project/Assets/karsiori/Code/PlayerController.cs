@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     private bool isJumping;
     private bool isDashing;
     private bool isGrounded;
+    public SPUM_Prefabs anim;
+    private bool facingRight = true;
+
 
     public Transform groundCheck;
     public LayerMask groundLayer;
@@ -62,7 +65,9 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+         moveInput = context.ReadValue<Vector2>();
+        // Play animation when there's movement input
+        
     }
 
     void OnJump(InputAction.CallbackContext context)
@@ -98,11 +103,31 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
         // Handle regular horizontal movement only if not dashing
         if (!isDashing)
         {
             Vector2 move = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
             rb.velocity = move;  // Apply regular movement using rigidbody's velocity
+
+            // Play animation only if the player is moving
+            if (moveInput.x != 0)
+            {
+                anim.PlayAnimation(1);
+                // Flip the player based on movement direction
+                if (moveInput.x > 0 && !facingRight)
+                {
+                    Flip();
+                }
+                else if (moveInput.x < 0 && facingRight)
+                {
+                    Flip();
+                }
+            }
+            else
+            {
+                anim.PlayAnimation(0); // Stop or reset animation when no movement
+            }
         }
 
         // Check if the player is grounded
@@ -129,6 +154,14 @@ public class PlayerController : MonoBehaviour
                 Invoke(nameof(ResetDash), dashCooldown);
             }
         }
+    }
+    
+    void Flip()
+    {
+        facingRight = !facingRight; // Toggle the facing direction
+        Vector3 scale = transform.localScale;
+        scale.x *= -1; // Flip the player by inverting the x scale
+        transform.localScale = scale;
     }
 
     void ResetDash()
