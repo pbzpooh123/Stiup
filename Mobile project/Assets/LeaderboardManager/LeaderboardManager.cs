@@ -189,6 +189,7 @@ public class LeaderboardManager : MonoBehaviour
 
         // โหลด Scene ปัจจุบันใหม่
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1; 
         
         
         
