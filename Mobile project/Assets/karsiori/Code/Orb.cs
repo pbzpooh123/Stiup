@@ -20,6 +20,15 @@ public class Orb : MonoBehaviour
                 gameObject.SetActive(false); // Disables the checkpoint
                 // or
                 // Destroy(gameObject); // Use this line instead if you want to permanently destroy it
+                
+                //------------------From Leaderboard---------------------------------------
+                // เพิ่มคะแนนเมื่อเก็บ Orb
+                LeaderboardManager leaderboardManager = FindObjectOfType<LeaderboardManager>();
+                if (leaderboardManager != null)
+                {
+                    leaderboardManager.IncreaseScore(); // เพิ่มคะแนน 1
+                }
+                //------------------From Leaderboard---------------------------------------
             }
         }
     }
