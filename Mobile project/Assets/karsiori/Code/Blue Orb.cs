@@ -11,19 +11,9 @@ public class BlueOrb : MonoBehaviour
             // Get the CheckpointManager and set the current checkpoint
             PlayerController  player = FindObjectOfType< PlayerController>();
 
-            player.dashSpeed = 20f;
+            player.dashSpeed = 500f;
             
             gameObject.SetActive(false);
-            
-            
-            //------------------From Leaderboard---------------------------------------
-            // เพิ่มคะแนนเมื่อเก็บ BlueOrb
-            LeaderboardManager leaderboardManager = FindObjectOfType<LeaderboardManager>();
-            if (leaderboardManager != null)
-            {
-                leaderboardManager.IncreaseScore(); // เพิ่มคะแนน 1
-            }
-            //------------------From Leaderboard---------------------------------------
             
         }
     }
